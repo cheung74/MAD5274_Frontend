@@ -14,6 +14,9 @@ const CustomTextInput = ({
     <View style={style}>
       <TextInput
         autoCapitalize="none"
+        keyboardType={
+          textContentType === "telephoneNumber" ? "number-pad" : "default"
+        }
         {...{ value, onChangeText, placeholder, textContentType }}
         style={styles.input}
         secureTextEntry={textContentType === "password"}

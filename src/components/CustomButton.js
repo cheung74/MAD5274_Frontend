@@ -19,7 +19,11 @@ const CustomButton = ({ onPress, loading, title, style }) => {
         style,
         {
           backgroundColor:
-            title === "Register" ? Colors.primary : Colors.quaternary,
+            title === "Register"
+              ? Colors.primary
+              : title === "Back"
+              ? Colors.secondary
+              : Colors.quaternary,
         },
       ]}
     >
