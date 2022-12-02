@@ -8,14 +8,25 @@ import {
 import React from "react";
 import Lottie from "lottie-react-native";
 import { Colors } from "../utils/Colors";
+import { Font } from "../utils/Fonts";
 
-const CustomButton = ({ onPress, loading, title }) => {
+const CustomButton = ({ onPress, loading, title, style }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.container,
+        style,
+        {
+          backgroundColor:
+            title === "Register" ? Colors.primary : Colors.quaternary,
+        },
+      ]}
+    >
       <Text
         style={{
           fontSize: 16,
-          fontWeight: "bold",
+          fontFamily: Font.GilroyBold,
         }}
       >
         {title}
@@ -44,7 +55,6 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.quaternary,
     borderRadius: 16,
-    marginVertical: 16,
     borderColor: Colors.dark,
     borderWidth: 1.2,
   },

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 import { Colors } from "../utils/Colors";
+import { Font } from "../utils/Fonts";
 
 const CustomTextInput = ({
   value,
@@ -15,6 +16,7 @@ const CustomTextInput = ({
         autoCapitalize="none"
         {...{ value, onChangeText, placeholder, textContentType }}
         style={styles.input}
+        secureTextEntry={textContentType === "password"}
       />
     </View>
   );
@@ -29,5 +31,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 16,
     backgroundColor: "white",
+    fontFamily: Font.GilroyBold,
   },
 });

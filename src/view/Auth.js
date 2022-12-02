@@ -36,13 +36,14 @@ const Auth = () => {
           <View style={styles.container}>
             <View style={{ marginTop: "auto" }} />
             <CustomTextInput
-              style={{ marginBottom: 16 }}
+              style={{ marginVertical: 8 }}
               value={email}
               onChangeText={setEmail}
               placeholder="Enter your email"
               textContentType="emailAddress"
             />
             <CustomTextInput
+              style={{ marginVertical: 8 }}
               value={password}
               onChangeText={setPassword}
               placeholder="Enter your password"
@@ -50,7 +51,14 @@ const Auth = () => {
             />
 
             <CustomButton
+              style={{ marginVertical: 8 }}
               title="Submit"
+              onPress={handleSubmit}
+              loading={loading}
+            />
+            <CustomButton
+              style={{ marginVertical: 8 }}
+              title="Register"
               onPress={handleSubmit}
               loading={loading}
             />
