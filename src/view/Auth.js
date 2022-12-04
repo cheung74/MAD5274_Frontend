@@ -12,11 +12,13 @@ import React from "react";
 import { Colors } from "../utils/Colors";
 import CustomTextInput from "../components/CustomTextInput";
 import CustomButton from "../components/CustomButton";
-
+import { createUser } from "../../services/user";
+import { storeLocalUserData } from "../../services/asyncStorage";
+import { useNavigation } from "@react-navigation/native";
 const Auth = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [rePassword, serRePassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(true);
   const [fullName, setFullName] = React.useState("");
@@ -24,6 +26,15 @@ const Auth = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
+    const result = await createUser({
+      email,
+      password,
+      fullName,
+      mobile,
+    });
+    if (result) {
+      const _result = await storeLocalUserData(result);
+    }
     setLoading(false);
   };
 
@@ -102,13 +113,6 @@ const Auth = () => {
                   placeholder="Enter your password"
                   textContentType="password"
                 />
-                <CustomTextInput
-                  style={{ marginVertical: 8 }}
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder="Re enter password"
-                  textContentType="password"
-                />
                 <CustomButton
                   style={{ marginVertical: 8 }}
                   title="Submit"
@@ -119,7 +123,6 @@ const Auth = () => {
                   style={{ marginVertical: 8 }}
                   title="Back"
                   onPress={handleRegister}
-                  loading={loading}
                 />
               </>
             )}

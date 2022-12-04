@@ -27,15 +27,6 @@ const CustomButton = ({ onPress, loading, title, style }) => {
         },
       ]}
     >
-      <Text
-        style={{
-          fontSize: 16,
-          fontFamily: Font.GilroyBold,
-        }}
-      >
-        {title}
-      </Text>
-
       <Lottie
         style={{
           width: 40,
@@ -46,6 +37,14 @@ const CustomButton = ({ onPress, loading, title, style }) => {
         autoPlay
         loop
       />
+      <Text
+        style={{
+          fontSize: 16,
+          fontFamily: Font.GilroyBold,
+        }}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
