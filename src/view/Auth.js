@@ -12,33 +12,27 @@ import React from "react";
 import { Colors } from "../utils/Colors";
 import CustomTextInput from "../components/CustomTextInput";
 import CustomButton from "../components/CustomButton";
-import { createUser } from "../../services/user";
-import { storeLocalUserData } from "../../services/asyncStorage";
+import { createUser } from "../services/user";
+import { storeLocalUserData } from "../services/asyncStorage";
 import { useNavigation } from "@react-navigation/native";
+import { useRegister } from "../hooks/useAuth";
+
 const Auth = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
-  const [isLogin, setIsLogin] = React.useState(true);
-  const [fullName, setFullName] = React.useState("");
-  const [mobile, setMobile] = React.useState("");
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    mobile,
+    setMobile,
+    loading,
+    handleRegister,
+    isLogin,
+    setIsLogin,
+  } = useRegister();
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    const result = await createUser({
-      email,
-      password,
-      fullName,
-      mobile,
-    });
-    if (result) {
-      const _result = await storeLocalUserData(result);
-    }
-    setLoading(false);
-  };
-
-  const handleRegister = () => {
+  const handleBack = () => {
     setIsLogin(!isLogin);
   };
 
@@ -116,13 +110,13 @@ const Auth = () => {
                 <CustomButton
                   style={{ marginVertical: 8 }}
                   title="Submit"
-                  onPress={handleSubmit}
+                  onPress={handleRegister}
                   loading={loading}
                 />
                 <CustomButton
                   style={{ marginVertical: 8 }}
                   title="Back"
-                  onPress={handleRegister}
+                  onPress={handleBack}
                 />
               </>
             )}
