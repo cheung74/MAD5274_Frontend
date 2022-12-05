@@ -12,8 +12,8 @@ import {
 import * as Location from 'expo-location';
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from "expo-image-picker";
-import { uploadImage } from "../../services/firebaseStorage";
-import { createPost } from "../../services/post";
+import { uploadImage } from "../services/firebaseStorage";
+import { createPost } from "../services/post";
 
 export default function InputModal({ latlng, modalVisible, onClose, getPost }) {
     const [name, onChangeName] = React.useState()

@@ -5,7 +5,7 @@ import {
     getDownloadURL,
     uploadBytes
 } from "@firebase/storage";
-import app from "../firebaseConfig";
+import app from "../../firebaseConfig";
 import uuid from "uuid";
 
 export const uploadImage = async (uri) => {

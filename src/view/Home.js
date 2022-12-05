@@ -4,7 +4,7 @@ import { SafeAreaView, StyleSheet, Dimensions, Animated } from 'react-native';
 import * as Location from 'expo-location';
 import ItemCard from '../components/ItemCard';
 import InputModal from '../components/InputModal';
-import { getPost } from '../../services/post';
+import { getPost } from '../services/post';
 
 const { width, height } = Dimensions.get('window')
 
@@ -65,7 +65,7 @@ export default function Home() {
           longitudeDelta: LONGITUDE_DELTA,
         }}
       >
-        {posts.map(post => (
+        {posts && posts.map(post => (
           <Marker coordinate={{ latitude: post.latitude, longitude: post.longitude }} key={post._id}>
             <Callout tooltip={true}>
               <ItemCard item={{ ...post }} />
@@ -79,7 +79,7 @@ export default function Home() {
         style={styles.scrollView}
         contentContainerStyle={styles.endPadding}
       >
-        {posts.map(post => (<ItemCard item={{ ...post }} onCardPress={onCardPress} key={post._id} />))}
+        {posts && posts.map(post => (<ItemCard item={{ ...post }} onCardPress={onCardPress} key={post._id} />))}
       </Animated.ScrollView>
       {modalVisible && <InputModal
         modalVisible={modalVisible}
