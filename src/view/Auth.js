@@ -15,7 +15,7 @@ import CustomButton from "../components/CustomButton";
 import { createUser } from "../services/user";
 import { storeLocalUserData } from "../services/asyncStorage";
 import { useNavigation } from "@react-navigation/native";
-import { useRegister } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 const Auth = () => {
   const navigation = useNavigation();
@@ -26,11 +26,14 @@ const Auth = () => {
     setPassword,
     mobile,
     setMobile,
+    fullName,
+    setFullName,
     loading,
     handleRegister,
+    handleLogin,
     isLogin,
     setIsLogin,
-  } = useRegister();
+  } = useAuth();
 
   const handleBack = () => {
     setIsLogin(!isLogin);
@@ -68,14 +71,13 @@ const Auth = () => {
                 <CustomButton
                   style={{ marginVertical: 8 }}
                   title="Submit"
-                  onPress={handleSubmit}
+                  onPress={handleLogin}
                   loading={loading}
                 />
                 <CustomButton
                   style={{ marginVertical: 8 }}
                   title="Register"
-                  onPress={handleRegister}
-                  loading={loading}
+                  onPress={handleBack}
                 />
               </>
             ) : (
