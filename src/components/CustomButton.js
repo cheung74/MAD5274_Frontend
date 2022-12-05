@@ -29,7 +29,7 @@ const CustomButton = ({ onPress, loading, title, style }) => {
     >
       <Lottie
         style={{
-          width: 40,
+          width: 30,
           display: loading ? "flex" : "none",
           alignSelf: "baseline",
         }}
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
     padding: 16,
     backgroundColor: Colors.quaternary,
     borderRadius: 16,

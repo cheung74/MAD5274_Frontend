@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Auth from "../view/Auth";
 import Home from "../view/Home";
+import HomeDrawer from "./Home";
 import { Screens } from "./ScreenNames";
 
 const Stack = createNativeStackNavigator();
@@ -14,7 +15,7 @@ const Root = () => {
       }}
     >
       <Stack.Screen name={Screens.auth} component={Auth} />
-      <Stack.Screen name={Screens.root} component={Home} />
+      <Stack.Screen name={Screens.root} component={HomeDrawer} />
     </Stack.Navigator>
   );
 };
