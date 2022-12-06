@@ -36,6 +36,8 @@ const Auth = () => {
   } = useAuth();
 
   const handleBack = () => {
+    setEmail("");
+    setPassword("");
     setIsLogin(!isLogin);
   };
 

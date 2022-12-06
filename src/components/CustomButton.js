@@ -27,16 +27,17 @@ const CustomButton = ({ onPress, loading, title, style }) => {
         },
       ]}
     >
-      <Lottie
-        style={{
-          width: 30,
-          display: loading ? "flex" : "none",
-          alignSelf: "baseline",
-        }}
-        source={require("../assets/animations/loadingDots.json")}
-        autoPlay
-        loop
-      />
+      {loading ? (
+        <Lottie
+          style={{
+            width: 30,
+          }}
+          source={require("../assets/animations/loadingDots.json")}
+          autoPlay
+          loop
+        />
+      ) : null}
+
       <Text
         style={{
           fontSize: 16,

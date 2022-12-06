@@ -15,24 +15,36 @@ export function useAuth() {
 
   const handleRegister = async () => {
     setLoading(true);
+    if (!email || !password || !fullName || !mobile) {
+      setLoading(false);
+      alert("Please enter all fields");
+      return;
+    }
     const result = await createUser({
-      email,
-      password,
-      fullName,
-      mobile,
+      email: email.trim(),
+      password: password.trim(),
+      fullName: fullName.trim(),
+      mobile: mobile.trim(),
     });
-    if (result) {
-      const _res = await storeLocalUserData(result);
+    if (result && result.status === "success" && result.user) {
+      const _res = await storeLocalUserData(result.user);
       if (_res) {
         navigation.navigate(Screens.root);
       }
+    } else {
+      alert(result.msg);
     }
     setLoading(false);
   };
 
   const handleLogin = async () => {
     setLoading(true);
-    const result = await login(email, password);
+    if (!email || !password) {
+      alert("Please enter email and password");
+      setLoading(false);
+      return;
+    }
+    const result = await login(email.trim(), password).trim();
     if (result) {
       if (result.status === "success" && result.user) {
         //login success
