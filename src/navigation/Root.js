@@ -14,8 +14,8 @@ const Root = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name={Screens.auth} component={Auth} />
       <Stack.Screen name={Screens.root} component={HomeDrawer} />
+      <Stack.Screen name={Screens.auth} component={Auth} />
     </Stack.Navigator>
   );
 };

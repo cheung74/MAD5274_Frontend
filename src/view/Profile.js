@@ -11,8 +11,11 @@ import { StatusBar } from "expo-status-bar";
 import { Font, FontSize } from "../utils/Fonts";
 import { AntDesign } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
+import { useProfile } from "../hooks/userProfile";
 
 const Profile = () => {
+  const { handleLogout } = useProfile();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar />
@@ -32,34 +35,41 @@ const Profile = () => {
           <Text style={styles.text2}>123@gmail.com</Text>
         </View>
         <View style={{ paddingHorizontal: 16 }}>
-          <View style={styles.btnCon}>
+          <TouchableOpacity style={styles.btnCon}>
             <Image
               source={require("../assets/images/badge.png")}
               style={styles.icon}
             />
             <Text style={styles.text3}>Badges</Text>
-          </View>
-          <View style={styles.btnCon}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnCon}>
             <Image
               source={require("../assets/images/call.png")}
               style={styles.icon}
             />
             <Text style={styles.text3}>Contact Us</Text>
-          </View>
-          <View style={styles.btnCon}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnCon}>
             <Image
               source={require("../assets/images/privacy-policy.png")}
               style={styles.icon}
             />
             <Text style={styles.text3}>Privacy Policy</Text>
-          </View>
-          <View style={styles.btnCon}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnCon}>
             <Image
               source={require("../assets/images/terms-and-conditions.png")}
               style={styles.icon}
             />
             <Text style={styles.text3}>Terms And Condition</Text>
-          </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnCon} onPress={handleLogout}>
+            <Image
+              source={require("../assets/images/logout.png")}
+              style={styles.icon}
+            />
+            <Text style={styles.text3}>Logout</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -119,6 +129,8 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     flexDirection: "row",
     alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgrey",
   },
   icon: {
     width: 20,
