@@ -6,11 +6,16 @@ import {
   Dimensions,
   Animated,
   View,
+  TouchableOpacity,
+  Text
 } from "react-native";
 import * as Location from "expo-location";
 import ItemCard from "../components/ItemCard";
 import InputModal from "../components/InputModal";
 import { getPost } from "../services/post";
+import { Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get("window");
 
@@ -20,6 +25,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default function Home() {
   const mapRef = useRef();
+  const scrollViewRef = useRef();
   const [onClickLocation, setOnClickLocation] = useState({});
   // const [currentLocation, setCurrentLocation] = useState({
   //   latitude: 43.78591,
@@ -31,6 +37,7 @@ export default function Home() {
   }); //Lambton
   const [modalVisible, setModalVisible] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [markersRef, setMarkersRef] = useState({})
 
   useEffect(() => {
     (async () => {
@@ -63,11 +70,17 @@ export default function Home() {
     }
   };
 
-  const onCardPress = (e) => {
+  const onCardPress = (e, index) => {
     mapRef.current.animateToRegion(
       { latitude: e.latitude, longitude: e.longitude },
       350
     );
+    for(const key in markersRef) {
+      markersRef[key].hideCallout()
+    }
+    markersRef[e._id].showCallout()
+    // console.log((index+1) * 220 + 100)
+    scrollViewRef.current.scrollTo({x: index * 220 + 100, y: 0, animated: true})
   };
 
   return (
@@ -91,9 +104,39 @@ export default function Home() {
                 longitude: post.longitude,
               }}
               key={post._id}
+              ref={ref=>{
+                let newRef = markersRef
+                let key = post._id
+                newRef[key] = ref
+                setMarkersRef(newRef)
+              }}
             >
               <Callout tooltip={true}>
-                <ItemCard item={{ ...post }} onCardPress={() => {}} />
+                <View>
+                  <TouchableOpacity
+                    // onPress={importPhoto}
+                    variant="outline"
+                    style={{ ...styles.btn }}
+                  >
+                    <View style={styles.rowAlign}>
+                        <Text style={styles.text}>Create Chatroom</Text>
+                        <Entypo name="chat" size={24} color="black" />
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    // onPress={importPhoto}
+                    variant="outline"
+                    style={{ ...styles.btn }}
+                  >
+                    <View style={styles.rowAlign}>
+                        <Text style={styles.text}>Item {post.type === 'Lost' ? "Found" : "Returned"}</Text>
+                        {post.type === 'Lost' ?
+                          <FontAwesome5 name="smile" size={24} color="black" /> :
+                          <MaterialCommunityIcons name="handshake-outline" size={24} color="black" />
+                        }
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </Callout>
             </Marker>
           ))}
@@ -103,13 +146,15 @@ export default function Home() {
         showsHorizontalScrollIndicator={false}
         style={styles.scrollView}
         contentContainerStyle={styles.endPadding}
+        ref={scrollViewRef}
       >
         {posts &&
-          posts.map((post) => (
+          posts.map((post, index) => (
             <ItemCard
               item={{ ...post }}
               onCardPress={onCardPress}
               key={post._id}
+              index={index}
             />
           ))}
       </Animated.ScrollView>
@@ -145,5 +190,21 @@ const styles = StyleSheet.create({
   },
   endPadding: {
     paddingRight: 180,
+  },
+  rowAlign: {
+    flexDirection: "row",
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    margin: 5
+  },
+  btn: {
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 3,
+    margin: 5
+  },
+  text: {
+    padding: 8,
   },
 });

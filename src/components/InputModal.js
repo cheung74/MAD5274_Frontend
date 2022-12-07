@@ -14,6 +14,8 @@ import { Entypo, AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from "expo-image-picker";
 import { uploadImage } from "../services/firebaseStorage";
 import { createPost } from "../services/post";
+import RadioGroup from 'react-native-radio-buttons-group';
+import uuid from "uuid"
 
 export default function InputModal({ latlng, modalVisible, onClose, getPost }) {
     const [name, onChangeName] = React.useState()
@@ -21,6 +23,19 @@ export default function InputModal({ latlng, modalVisible, onClose, getPost }) {
     const [timeStamp] = useState(Date.now())
     const [address, setAddress] = useState("")
     const [image, setImage] = useState("")
+    const [radioButtons, setRadioButtons] = useState([
+        {
+            id: uuid.v4(),
+            label: 'Lost',
+            value: 'Lost',
+            selected: true
+        },
+        {
+            id: uuid.v4(),
+            label: 'Found',
+            value: 'Found'
+        }
+    ])
 
     const importPhoto = async () => {
         let res = {}
@@ -62,7 +77,9 @@ export default function InputModal({ latlng, modalVisible, onClose, getPost }) {
             timeStamp,
             latitude: latlng.latitude,
             longitude: latlng.longitude,
-            url
+            url,
+            type: radioButtons.find(e=>e.selected===true).value,
+            status: 'pending'
         }
         if (name && desc) {
             await createPost(item)
@@ -72,6 +89,10 @@ export default function InputModal({ latlng, modalVisible, onClose, getPost }) {
         } else {
             Alert.alert("Name and description can't be empty")
         }
+    }
+
+    function onPressRadioButton(radioButtonsArray) {
+        setRadioButtons(radioButtonsArray);
     }
 
     return (
@@ -136,6 +157,14 @@ export default function InputModal({ latlng, modalVisible, onClose, getPost }) {
                     </View>
                     <View style={styles.rowAlign}>
                         <Text >Date: {new Date(timeStamp).toLocaleString()}</Text>
+                    </View>
+                    <View style={styles.rowAlign}>
+                        <Text >Type: </Text>
+                        <RadioGroup
+                            layout="row"
+                            radioButtons={radioButtons} 
+                            onPress={onPressRadioButton} 
+                        />
                     </View>
                     <TouchableOpacity
                         style={styles.addBtn}

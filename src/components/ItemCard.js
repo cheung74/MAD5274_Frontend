@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 
-const CARD_HEIGHT = 250;
-const CARD_WIDTH = CARD_HEIGHT - 30;
+const CARD_HEIGHT = 280;
+const CARD_WIDTH = 220;
 
-export default function ItemCard({ item, onCardPress }) {
+export default function ItemCard({ item, onCardPress, index }) {
 
     const [address, setAddress] = useState("")
 
@@ -22,7 +22,7 @@ export default function ItemCard({ item, onCardPress }) {
     }, [])
 
     return (
-        <TouchableOpacity onPress={() => onCardPress(item)}>
+        <TouchableOpacity onPress={() => onCardPress(item, index)}>
             <View style={styles.background} key={item.id}>
                 <View style={{ width: '100%', alignItems: 'center', padding: 5 }}>
                     <Image
@@ -40,6 +40,7 @@ export default function ItemCard({ item, onCardPress }) {
                 </Text>
                 </Text>
                 <Text style={styles.text}>Address: <Text style={styles.text}>{address}</Text></Text>
+                {item.type && <Text style={styles.text}>Type: <Text style={styles.text}>{item.type} Item</Text></Text>}
                 <Text style={styles.text}>Date: <Text style={styles.text}>{new Date(item.timeStamp).toLocaleString()}</Text></Text>
             </View>
         </TouchableOpacity>
