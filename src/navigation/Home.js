@@ -4,6 +4,8 @@ import { Screens } from "./ScreenNames";
 import Home from "../view/Home";
 import Profile from "../view/Profile";
 import Chatroom from "../view/Chatroom"
+import { Colors } from "../utils/Colors";
+import GoogleAds from "../components/GoogleAds";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +27,7 @@ const HomeDrawer = () => {
     <Drawer.Navigator
       screenOptions={{
         headerShown: false,
+        drawerActiveTintColor: Colors.dark,
       }}
     >
       <Drawer.Screen name={Screens.home} component={HomeStack} />
