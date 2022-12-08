@@ -44,7 +44,7 @@ export function useAuth() {
       setLoading(false);
       return;
     }
-    const result = await login(email.trim(), password).trim();
+    const result = await login(email.trim(), password.trim());
     if (result) {
       if (result.status === "success" && result.user) {
         //login success

@@ -54,6 +54,7 @@ const Auth = () => {
         muted={true}
         resizeMode={"cover"}
         rate={1.0}
+        controls={true}
         isLooping
         ignoreSilentSwitch={"obey"}
       />
