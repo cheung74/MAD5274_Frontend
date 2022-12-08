@@ -29,7 +29,7 @@ export function useAuth() {
     if (result && result.status === "success" && result.user) {
       const _res = await storeLocalUserData(result.user);
       if (_res) {
-        navigation.navigate(Screens.root);
+        navigation.navigate(Screens.ads);
       }
     } else {
       alert(result.msg);
@@ -50,7 +50,7 @@ export function useAuth() {
         //login success
         const _result = await storeLocalUserData(result.user);
         if (_result) {
-          navigation.navigate(Screens.root);
+          navigation.navigate(Screens.ads);
         }
       } else if (result.msg) {
         alert(result.msg);

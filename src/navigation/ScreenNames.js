@@ -3,8 +3,9 @@ const Screens = {
   auth: "AUTH",
   home: "HOME",
   profile: "PROFILE",
+  ads: "ADS",
   chatroom: "CHATROOMSTACK",
-  homeStack: "HOMESTACK"
+  homeStack: "HOMESTACK",
 };
 
 export { Screens };

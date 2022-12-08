@@ -8,7 +8,7 @@ const FullScreenAds = ({ shown, onPress }) => {
   React.useEffect(() => {
     setTimeout(() => {
       setShownBtn(true);
-    }, 1000);
+    }, 2000);
   }, []);
 
   if (!shown) {

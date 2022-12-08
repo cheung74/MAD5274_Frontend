@@ -5,7 +5,7 @@ import FullScreenAds from "./Ads/FullScreenAds";
 
 const height = Dimensions.get("screen").height;
 
-const GoogleAds = ({ type }) => {
+const GoogleAds = ({ type, onPress }) => {
   const [shown, setShown] = React.useState(true);
 
   const AdsBanner = ({ shown }) => {
@@ -29,7 +29,17 @@ const GoogleAds = ({ type }) => {
   };
 
   const adsScreens = {
-    full: <FullScreenAds {...{ shown, onPress: () => setShown(false) }} />,
+    full: (
+      <FullScreenAds
+        {...{
+          shown,
+          onPress: () => {
+            onPress();
+            setShown(false);
+          },
+        }}
+      />
+    ),
     banner: <AdsBanner {...{ shown }} />,
     midBanner: <MidAdsBanner {...{ shown }} />,
   };

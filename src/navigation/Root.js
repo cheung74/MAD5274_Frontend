@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Ads from "../view/Ads";
 
 import Auth from "../view/Auth";
 import Home from "../view/Home";
@@ -14,8 +15,9 @@ const Root = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name={Screens.root} component={HomeDrawer} />
       <Stack.Screen name={Screens.auth} component={Auth} />
+      <Stack.Screen name={Screens.ads} component={Ads} />
+      <Stack.Screen name={Screens.root} component={HomeDrawer} />
     </Stack.Navigator>
   );
 };
