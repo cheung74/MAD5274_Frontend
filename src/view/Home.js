@@ -1,21 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
-import MapView, { Marker, Callout } from "react-native-maps";
+import MapView, {Marker} from "react-native-maps";
 import {
-  SafeAreaView,
   StyleSheet,
   Dimensions,
   Animated,
   View,
-  TouchableOpacity,
-  Text
 } from "react-native";
 import * as Location from "expo-location";
 import ItemCard from "../components/ItemCard";
 import InputModal from "../components/InputModal";
+import CustomCallout from "../components/CustomCallout";
 import { getPost } from "../services/post";
-import { Entypo } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -26,6 +22,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 export default function Home() {
   const mapRef = useRef();
   const scrollViewRef = useRef();
+  const navigation = useNavigation();
   const [onClickLocation, setOnClickLocation] = useState({});
   // const [currentLocation, setCurrentLocation] = useState({
   //   latitude: 43.78591,
@@ -71,17 +68,35 @@ export default function Home() {
   };
 
   const onCardPress = (e, index) => {
+    // place animate to region at the end
+    markersRef[e._id].showCallout()
+    scrollViewRef.current.scrollTo({x: index * 220 + 100, y: 0, animated: true})
     mapRef.current.animateToRegion(
       { latitude: e.latitude, longitude: e.longitude },
-      350
+      500
     );
-    for(const key in markersRef) {
-      markersRef[key].hideCallout()
-    }
-    markersRef[e._id].showCallout()
-    // console.log((index+1) * 220 + 100)
-    scrollViewRef.current.scrollTo({x: index * 220 + 100, y: 0, animated: true})
   };
+
+  const MarkerWithRef = (post) => {
+    const myRef = ref => {
+      let newRef = markersRef
+      let key = post._id
+      newRef[key] = ref
+      setMarkersRef(newRef)
+    }
+    return (
+      <Marker
+          coordinate={{
+              latitude: post.latitude,
+              longitude: post.longitude,
+          }}
+          key={post._id}
+          ref={myRef}
+      >
+        <CustomCallout post={post} navigation={navigation}/>
+      </Marker>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -96,50 +111,7 @@ export default function Home() {
           longitudeDelta: LONGITUDE_DELTA,
         }}
       >
-        {posts &&
-          posts.map((post) => (
-            <Marker
-              coordinate={{
-                latitude: post.latitude,
-                longitude: post.longitude,
-              }}
-              key={post._id}
-              ref={ref=>{
-                let newRef = markersRef
-                let key = post._id
-                newRef[key] = ref
-                setMarkersRef(newRef)
-              }}
-            >
-              <Callout tooltip={true}>
-                <View>
-                  <TouchableOpacity
-                    // onPress={importPhoto}
-                    variant="outline"
-                    style={{ ...styles.btn }}
-                  >
-                    <View style={styles.rowAlign}>
-                        <Text style={styles.text}>Create Chatroom</Text>
-                        <Entypo name="chat" size={24} color="black" />
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    // onPress={importPhoto}
-                    variant="outline"
-                    style={{ ...styles.btn }}
-                  >
-                    <View style={styles.rowAlign}>
-                        <Text style={styles.text}>Item {post.type === 'Lost' ? "Found" : "Returned"}</Text>
-                        {post.type === 'Lost' ?
-                          <FontAwesome5 name="smile" size={24} color="black" /> :
-                          <MaterialCommunityIcons name="handshake-outline" size={24} color="black" />
-                        }
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </Callout>
-            </Marker>
-          ))}
+        {posts && posts.map(MarkerWithRef)}
       </MapView>
       <Animated.ScrollView
         horizontal
