@@ -12,10 +12,12 @@ import { Font, FontSize } from "../utils/Fonts";
 import { AntDesign } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { useProfile } from "../hooks/userProfile";
+import { useNavigation } from "@react-navigation/native";
+import { Screens } from "../navigation/ScreenNames";
 
 const Profile = () => {
-  const { handleLogout } = useProfile();
-
+  const { handleLogout, user } = useProfile();
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar />
@@ -26,13 +28,18 @@ const Profile = () => {
             style={styles.icon1}
             defaultSource={require("../assets/images/icon_template.png")}
           />
-          <TouchableOpacity style={styles.edit}>
+          <TouchableOpacity
+            style={styles.edit}
+            onPress={() => {
+              navigation.navigate(Screens.editProfile);
+            }}
+          >
             <AntDesign name="edit" size={25} color="white" />
           </TouchableOpacity>
         </View>
         <View style={styles.subCon}>
-          <Text style={styles.text}>ABC EDG</Text>
-          <Text style={styles.text2}>123@gmail.com</Text>
+          <Text style={styles.text}>{user?.fullName}</Text>
+          <Text style={styles.text2}>{user?.email}</Text>
         </View>
         <View style={{ paddingHorizontal: 16 }}>
           <TouchableOpacity style={styles.btnCon}>

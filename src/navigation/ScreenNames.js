@@ -4,8 +4,10 @@ const Screens = {
   home: "HOME",
   profile: "PROFILE",
   ads: "ADS",
-  chatroom: "CHATROOMSTACK",
-  homeStack: "HOMESTACK",
+  chatroom: "CHATROOM_STACK",
+  homeStack: "HOME_STACK",
+  profileStack: "PROFILE_STACK",
+  editProfile: "EDIT_PROFILE",
 };
 
 export { Screens };

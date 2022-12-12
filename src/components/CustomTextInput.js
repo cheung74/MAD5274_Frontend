@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View, Keyboard } from "react-native";
 import React from "react";
 import { Colors } from "../utils/Colors";
 import { Font } from "../utils/Fonts";
@@ -19,6 +19,7 @@ const CustomTextInput = ({
         }
         {...{ value, onChangeText, placeholder, textContentType }}
         style={styles.input}
+        onSubmitEditing={Keyboard.dismiss}
         secureTextEntry={textContentType === "password"}
       />
     </View>

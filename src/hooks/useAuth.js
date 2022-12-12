@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { storeLocalUserData } from "../services/asyncStorage";
+import { getLocalUserData, storeLocalUserData } from "../services/asyncStorage";
 import { createUser, login } from "../services/user";
 import { Screens } from "../navigation/ScreenNames";
 export function useAuth() {
@@ -29,13 +29,31 @@ export function useAuth() {
     if (result && result.status === "success" && result.user) {
       const _res = await storeLocalUserData(result.user);
       if (_res) {
-        navigation.navigate(Screens.ads);
+        loginSuccess();
       }
     } else {
       alert(result.msg);
     }
     setLoading(false);
   };
+
+  const loginSuccess = () => {
+    setEmail("");
+    setPassword("");
+    setFullName("");
+    setMobile("");
+    navigation.navigate(Screens.ads);
+  };
+
+  React.useEffect(() => {
+    const _getCurrentUser = async () => {
+      const _user = await getLocalUserData();
+      if (_user) {
+        loginSuccess();
+      }
+    };
+    _getCurrentUser();
+  }, []);
 
   const handleLogin = async () => {
     setLoading(true);
@@ -50,7 +68,7 @@ export function useAuth() {
         //login success
         const _result = await storeLocalUserData(result.user);
         if (_result) {
-          navigation.navigate(Screens.ads);
+          loginSuccess();
         }
       } else if (result.msg) {
         alert(result.msg);
