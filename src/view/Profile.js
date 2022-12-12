@@ -26,6 +26,7 @@ const Profile = () => {
         <View style={styles.subCon}>
           <Image
             style={styles.icon1}
+            source={{ uri: user?.icon || "" }}
             defaultSource={require("../assets/images/icon_template.png")}
           />
           <TouchableOpacity

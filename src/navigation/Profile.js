@@ -12,8 +12,8 @@ const ProfileStack = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name={Screens.editProfile} component={EditProfile} />
       <Stack.Screen name={Screens.profile} component={Profile} />
+      <Stack.Screen name={Screens.editProfile} component={EditProfile} />
     </Stack.Navigator>
   );
 };
