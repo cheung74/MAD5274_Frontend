@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import MapView, {Marker} from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import {
   StyleSheet,
   Dimensions,
   Animated,
   View,
+  TouchableOpacity,
 } from "react-native";
 import * as Location from "expo-location";
 import ItemCard from "../components/ItemCard";
@@ -12,6 +13,8 @@ import InputModal from "../components/InputModal";
 import CustomCallout from "../components/CustomCallout";
 import { getPost } from "../services/post";
 import { useNavigation } from "@react-navigation/native";
+import { getLocalUserData } from "../services/asyncStorage";
+import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get("window");
 
@@ -35,6 +38,11 @@ export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [posts, setPosts] = useState([]);
   const [markersRef, setMarkersRef] = useState({})
+  const [user, setUser] = useState();
+
+  const getLatestPost = async () => { await getPost().then(posts => setPosts(posts)) }
+
+  const getUser = async () => { await getLocalUserData().then(user => setUser(user)) }
 
   useEffect(() => {
     (async () => {
@@ -50,7 +58,9 @@ export default function Home() {
       await Location.getCurrentPositionAsync({})
         .then((location) => setCurrentLocation(location.coords))
         .catch((e) => console.log(e));
-      setPosts(await getPost());
+
+      getLatestPost()
+      getUser()
     })();
   }, []);
 
@@ -70,7 +80,7 @@ export default function Home() {
   const onCardPress = (e, index) => {
     // place animate to region at the end
     markersRef[e._id].showCallout()
-    scrollViewRef.current.scrollTo({x: index * 220 + 100, y: 0, animated: true})
+    scrollViewRef.current.scrollTo({ x: index * 220 + 100, y: 0, animated: true })
     mapRef.current.animateToRegion(
       { latitude: e.latitude, longitude: e.longitude },
       500
@@ -86,20 +96,21 @@ export default function Home() {
     }
     return (
       <Marker
-          coordinate={{
-              latitude: post.latitude,
-              longitude: post.longitude,
-          }}
-          key={post._id}
-          ref={myRef}
+        coordinate={{
+          latitude: post.latitude,
+          longitude: post.longitude,
+        }}
+        key={post._id}
+        ref={myRef}
       >
-        <CustomCallout post={post} navigation={navigation}/>
+        <CustomCallout post={post} navigation={navigation} user={user} getLatestPost={getLatestPost} />
       </Marker>
     )
   }
 
   return (
     <View style={styles.container}>
+
       <MapView
         style={styles.map}
         ref={mapRef}
@@ -113,6 +124,12 @@ export default function Home() {
       >
         {posts && posts.map(MarkerWithRef)}
       </MapView>
+      <TouchableOpacity
+        onPress={() => getLatestPost()}
+        style={styles.refreshBtnBg}
+      >
+        <Ionicons name="refresh" size={40} color="black" style={styles.refreshBtn} />
+      </TouchableOpacity>
       <Animated.ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -136,6 +153,7 @@ export default function Home() {
           latlng={onClickLocation}
           onClose={() => setModalVisible(false)}
           getPost={async () => setPosts(await getPost())}
+          user={user}
         />
       )}
     </View>
@@ -179,4 +197,20 @@ const styles = StyleSheet.create({
   text: {
     padding: 8,
   },
+  refreshBtnBg: {
+    alignSelf: "center", 
+    position: 'absolute', 
+    top: 40, 
+    backgroundColor: 'white', 
+    borderRadius: '50%',
+    shadowColor: 'gray',
+    shadowRadius: 5,
+    shadowOpacity: 0.5, height: 50, width: 50
+  },
+  refreshBtn: {
+    flex: 1, 
+    alignSelf: 'center', 
+    justify: 'center', 
+    paddingTop: 2
+  }
 });

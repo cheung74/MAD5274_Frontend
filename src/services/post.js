@@ -33,3 +33,21 @@ export const getPost = async () => {
   }
 };
 
+export const updatePost = async (item) => {
+  try {
+    const url = BASE_URL + "/post";
+    const result = await fetch(url, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    });
+    const res = await result.json();
+    return res;
+  } catch (error) {
+    console.log(error.message);
+    return false
+  }
+};

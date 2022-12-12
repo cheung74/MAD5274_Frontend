@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     View,
     Image,
-    Alert
+    Alert,
+    Dimensions
 } from "react-native";
 import * as Location from 'expo-location';
 import { Entypo, AntDesign } from '@expo/vector-icons';
@@ -17,7 +18,9 @@ import { createPost } from "../services/post";
 import RadioGroup from 'react-native-radio-buttons-group';
 import uuid from "uuid"
 
-export default function InputModal({ latlng, modalVisible, onClose, getPost }) {
+const { width } = Dimensions.get("window");
+
+export default function InputModal({ latlng, modalVisible, onClose, getPost, user }) {
     const [name, onChangeName] = React.useState()
     const [desc, onChangeDesc] = React.useState()
     const [timeStamp] = useState(Date.now())
@@ -79,7 +82,8 @@ export default function InputModal({ latlng, modalVisible, onClose, getPost }) {
             longitude: latlng.longitude,
             url,
             type: radioButtons.find(e=>e.selected===true).value,
-            status: 'pending'
+            status: 'pending',
+            createdBy: user._id
         }
         if (name && desc) {
             await createPost(item)
@@ -203,7 +207,7 @@ const styles = StyleSheet.create({
         padding: 8,
         borderColor: "white",
         borderRadius: 10,
-        width: 250,
+        width: width * 0.6,
         color: 'grey',
     },
     rowAlign: {
