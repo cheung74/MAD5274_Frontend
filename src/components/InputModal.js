@@ -118,9 +118,9 @@ export default function InputModal({ latlng, modalVisible, onClose, getPost, use
                                     resizeMode="contain"
                                     source={{ uri: image }}
                                     alt="image"
-                                    style={{ width: 200, height: 150 }}
+                                    style={{ width: 190, height: 150 }}
                                 />
-                                <TouchableOpacity onPress={() => setImage("")} style={{ marginLeft: 25 }}>
+                                <TouchableOpacity onPress={() => setImage("")} style={{ marginLeft: 8 }}>
                                     <Text style={{ color: 'red' }}>Remove</Text>
                                 </TouchableOpacity>
                             </View>

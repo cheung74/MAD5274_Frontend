@@ -40,7 +40,7 @@ export default function Home() {
   const [markersRef, setMarkersRef] = useState({})
   const [user, setUser] = useState();
 
-  const getLatestPost = async () => { await getPost().then(posts => setPosts(posts)) }
+  const getLatestPost = async () => setPosts(await getPost())
 
   const getUser = async () => { await getLocalUserData().then(user => setUser(user)) }
 
@@ -125,7 +125,7 @@ export default function Home() {
         {posts && posts.map(MarkerWithRef)}
       </MapView>
       <TouchableOpacity
-        onPress={() => getLatestPost()}
+        onPress={getLatestPost}
         style={styles.refreshBtnBg}
       >
         <Ionicons name="refresh" size={40} color="black" style={styles.refreshBtn} />
@@ -152,7 +152,7 @@ export default function Home() {
           modalVisible={modalVisible}
           latlng={onClickLocation}
           onClose={() => setModalVisible(false)}
-          getPost={async () => setPosts(await getPost())}
+          getPost={getLatestPost}
           user={user}
         />
       )}

@@ -3,7 +3,8 @@ import {
     StyleSheet,
     View,
     TouchableOpacity,
-    Text
+    Text,
+    Alert
 } from "react-native";
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -26,6 +27,7 @@ export default function CustomCallout({ post, navigation, user, getLatestPost })
     const postCompleted = () => {
         post.status = 'completed'
         updatePost(post)
+        .then(Alert.alert("It is great to hear that lost item has been found."))
         .then(getLatestPost())
     }
 
