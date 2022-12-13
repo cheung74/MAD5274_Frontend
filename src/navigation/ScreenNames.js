@@ -8,6 +8,7 @@ const Screens = {
   homeStack: "HOME_STACK",
   profileStack: "PROFILE_STACK",
   editProfile: "EDIT_PROFILE",
+  badges: "BADGES",
 };
 
 export { Screens };

@@ -1,6 +1,7 @@
 import {
   Image,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -88,45 +89,55 @@ const EditProfile = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar />
-      <View style={styles.container}>
-        <Text style={styles.header}>Edit Profile</Text>
-        <View style={styles.subCon}>
-          <Image
-            style={styles.icon1}
-            source={{ uri: image }}
-            defaultSource={require("../assets/images/icon_template.png")}
-          />
-          <TouchableOpacity style={styles.edit} onPress={importPhoto}>
-            <AntDesign name="camera" size={25} color="white" />
-          </TouchableOpacity>
-        </View>
+      <ScrollView>
+        <StatusBar />
+        <View style={styles.container}>
+          <Text style={styles.header}>Edit Profile</Text>
+          <View style={styles.subCon}>
+            <Image
+              style={styles.icon1}
+              source={{ uri: image }}
+              defaultSource={require("../assets/images/icon_template.png")}
+            />
+            <TouchableOpacity style={styles.edit} onPress={importPhoto}>
+              <AntDesign name="camera" size={25} color="white" />
+            </TouchableOpacity>
+          </View>
 
-        <CustomTextInput
-          style={{ marginVertical: 8 }}
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Enter your email"
-          textContentType="emailAddress"
-        />
-        <CustomTextInput
-          style={{ marginVertical: 8 }}
-          value={fullName}
-          onChangeText={setFullName}
-          placeholder="Enter your full name"
-        />
-        <CustomTextInput
-          style={{ marginVertical: 8 }}
-          value={mobile}
-          onChangeText={setMobile}
-          textContentType="telephoneNumber"
-          placeholder="Enter your phone number"
-        />
-      </View>
-      <View style={{ marginTop: "auto" }} />
-      <View style={styles.subCon}>
-        <CustomButton title="Submit" onPress={onSubmit} loading={loading} />
-      </View>
+          <CustomTextInput
+            style={{ marginVertical: 8 }}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="Enter your email"
+            textContentType="emailAddress"
+          />
+          <CustomTextInput
+            style={{ marginVertical: 8 }}
+            value={fullName}
+            onChangeText={setFullName}
+            placeholder="Enter your full name"
+          />
+          <CustomTextInput
+            style={{ marginVertical: 8 }}
+            value={mobile}
+            onChangeText={setMobile}
+            textContentType="telephoneNumber"
+            placeholder="Enter your phone number"
+          />
+        </View>
+        <View style={{ marginTop: "auto" }} />
+
+        <View
+          style={[
+            styles.subCon,
+            { flexDirection: "row", justifyContent: "center" },
+          ]}
+        >
+          <CustomButton title="Back" onPress={() => navigation.goBack()} />
+          <View style={{ width: 50 }} />
+          <CustomButton title="Submit" onPress={onSubmit} loading={loading} />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

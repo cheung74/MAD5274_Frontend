@@ -12,7 +12,7 @@ const GoogleAds = ({ type, onPress }) => {
     return (
       <Image
         source={require("../assets/images/ads-banner.png")}
-        style={{ width: "100%" }}
+        style={{ width: "100%", top: -40 }}
         resizeMode="contain"
       />
     );

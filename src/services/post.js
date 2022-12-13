@@ -1,5 +1,20 @@
 const BASE_URL = "http://localhost:3000";
 
+
+export const getUserFoundItem = async (userId) => {
+  try {
+    const url = BASE_URL + `/post/badges/${userId}`
+    const result = await fetch(url, {
+      method: "GET"
+    })
+    const res = await result.json();
+    return res;
+  } catch (error) {
+    console.log(error.message);
+    return false
+  }
+}
+
 export const createPost = async (item) => {
   try {
     const url = BASE_URL + "/post";

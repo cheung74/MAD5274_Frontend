@@ -1,6 +1,7 @@
 import {
   Image,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,72 +15,79 @@ import { Colors } from "../utils/Colors";
 import { useProfile } from "../hooks/userProfile";
 import { useNavigation } from "@react-navigation/native";
 import { Screens } from "../navigation/ScreenNames";
+import GoogleAds from "../components/GoogleAds";
 
 const Profile = () => {
   const { handleLogout, user } = useProfile();
   const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar />
-      <View style={styles.container}>
-        <Text style={styles.header}>Lost and found</Text>
-        <View style={styles.subCon}>
-          <Image
-            style={styles.icon1}
-            source={{ uri: user?.icon || "" }}
-            defaultSource={require("../assets/images/icon_template.png")}
-          />
-          <TouchableOpacity
-            style={styles.edit}
-            onPress={() => {
-              navigation.navigate(Screens.editProfile);
-            }}
-          >
-            <AntDesign name="edit" size={25} color="white" />
-          </TouchableOpacity>
+      <ScrollView>
+        <StatusBar />
+        <View style={styles.container}>
+          <Text style={styles.header}>Lost and found</Text>
+          <View style={styles.subCon}>
+            <Image
+              style={styles.icon1}
+              source={{ uri: user?.icon || "" }}
+              defaultSource={require("../assets/images/icon_template.png")}
+            />
+            <TouchableOpacity
+              style={styles.edit}
+              onPress={() => {
+                navigation.navigate(Screens.editProfile);
+              }}
+            >
+              <AntDesign name="edit" size={25} color="white" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.subCon}>
+            <Text style={styles.text}>{user?.fullName}</Text>
+            <Text style={styles.text2}>{user?.email}</Text>
+          </View>
+          <View style={{ paddingHorizontal: 16 }}>
+            <TouchableOpacity
+              style={styles.btnCon}
+              onPress={() => navigation.navigate(Screens.badges)}
+            >
+              <Image
+                source={require("../assets/images/badge.png")}
+                style={styles.icon}
+              />
+              <Text style={styles.text3}>Badges</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnCon}>
+              <Image
+                source={require("../assets/images/call.png")}
+                style={styles.icon}
+              />
+              <Text style={styles.text3}>Contact Us</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnCon}>
+              <Image
+                source={require("../assets/images/privacy-policy.png")}
+                style={styles.icon}
+              />
+              <Text style={styles.text3}>Privacy Policy</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnCon}>
+              <Image
+                source={require("../assets/images/terms-and-conditions.png")}
+                style={styles.icon}
+              />
+              <Text style={styles.text3}>Terms And Condition</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnCon} onPress={handleLogout}>
+              <Image
+                source={require("../assets/images/logout.png")}
+                style={styles.icon}
+              />
+              <Text style={styles.text3}>Logout</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.subCon}>
-          <Text style={styles.text}>{user?.fullName}</Text>
-          <Text style={styles.text2}>{user?.email}</Text>
-        </View>
-        <View style={{ paddingHorizontal: 16 }}>
-          <TouchableOpacity style={styles.btnCon}>
-            <Image
-              source={require("../assets/images/badge.png")}
-              style={styles.icon}
-            />
-            <Text style={styles.text3}>Badges</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnCon}>
-            <Image
-              source={require("../assets/images/call.png")}
-              style={styles.icon}
-            />
-            <Text style={styles.text3}>Contact Us</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnCon}>
-            <Image
-              source={require("../assets/images/privacy-policy.png")}
-              style={styles.icon}
-            />
-            <Text style={styles.text3}>Privacy Policy</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnCon}>
-            <Image
-              source={require("../assets/images/terms-and-conditions.png")}
-              style={styles.icon}
-            />
-            <Text style={styles.text3}>Terms And Condition</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnCon} onPress={handleLogout}>
-            <Image
-              source={require("../assets/images/logout.png")}
-              style={styles.icon}
-            />
-            <Text style={styles.text3}>Logout</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        <GoogleAds type={"banner"} />
+      </ScrollView>
     </SafeAreaView>
   );
 };
