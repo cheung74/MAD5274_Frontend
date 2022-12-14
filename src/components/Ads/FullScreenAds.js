@@ -16,9 +16,9 @@ const FullScreenAds = ({ shown, onPress }) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "black" }}>
       <Image
-        resizeMode={"cover"}
+        resizeMode={"stretch"}
         source={require("../../assets/images/ads-full-size.png")}
         style={styles.image}
       />

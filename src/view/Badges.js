@@ -1,4 +1,11 @@
-import { SafeAreaView, StyleSheet, Text, View, Image } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Share,
+} from "react-native";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { useProfile } from "../hooks/userProfile";
@@ -10,6 +17,26 @@ import { Screens } from "../navigation/ScreenNames";
 const Badges = () => {
   const { user, count } = useProfile();
   const navigation = useNavigation();
+
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `I have found ${count || 0} items!!!!`,
+      });
+      if (result.action === Share.shareAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
@@ -40,7 +67,11 @@ const Badges = () => {
       } items, keep it up!`}</Text>
 
       <View />
-      <CustomButton title={"Back"} onPress={() => navigation.goBack()} />
+      <View style={{ flexDirection: "row" }}>
+        <CustomButton title={"Back"} onPress={() => navigation.goBack()} />
+        <View style={{ width: 40 }} />
+        <CustomButton title={"Share"} onPress={handleShare} />
+      </View>
     </SafeAreaView>
   );
 };
