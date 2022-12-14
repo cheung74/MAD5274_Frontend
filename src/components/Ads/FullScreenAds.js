@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import { StyleSheet, Text, View, ImageBackground, Image } from "react-native";
 import React from "react";
 import CloseBtn from "./CloseBtn";
 
@@ -16,22 +16,25 @@ const FullScreenAds = ({ shown, onPress }) => {
   }
 
   return (
-    <ImageBackground
-      source={require("../../assets/images/ads-full-size.png")}
-      style={styles.image}
-    >
+    <View style={{ flex: 1 }}>
+      <Image
+        resizeMode={"cover"}
+        source={require("../../assets/images/ads-full-size.png")}
+        style={styles.image}
+      />
       <CloseBtn
         {...{ onPress }}
         style={{
           position: "absolute",
           top: 50,
+          zIndex: 5,
           right: 40,
           backgroundColor: "white",
           borderRadius: 25,
           display: shownBtn ? "flex" : "none",
         }}
       />
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -41,7 +44,6 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
-    resizeMode: "contain",
     position: "relative",
   },
 });

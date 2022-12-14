@@ -48,7 +48,7 @@ const Auth = () => {
       <Video
         shouldPlay
         ref={video}
-        useNativeControls
+        useNativeControls={false}
         source={require("../assets/videos/loginFootage.mp4")}
         style={styles.backgroundVideo}
         muted={true}
